@@ -1,6 +1,6 @@
 /**
  * @file utility.h
- * @brief ユーティリティ関数ヘッダ-
+ * @brief ユーティリティ関数ヘッダー
  * @date 2022/05/18
  */
 #pragma once
