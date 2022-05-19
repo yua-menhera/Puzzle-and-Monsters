@@ -1,7 +1,6 @@
 /**
  * @file utility.h
- * @brief ユーティリティ関数ヘッダ
- * @author yuuka-overdose
+ * @brief ユーティリティ関数ヘッダ-
  * @date 2022/05/18
  */
 #pragma once
@@ -68,3 +67,5 @@ int calcEnemyAttackDamage(int enemyAttack, int partyDefence);
 int calcAttackDamage(int playerAttack, int enemyDefence, double boost, int gems, int combo);
 int calcRecoverDamage();
 void printCombo();
+
+/* @} */

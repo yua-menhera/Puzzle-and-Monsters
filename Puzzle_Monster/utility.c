@@ -1,3 +1,9 @@
+/**
+ * @file utility.c
+ * @brief ユーティリティ関数ソースコード
+ * @author yuuka-overdose
+ * @date 2022/05/19
+ */
 #include<stdio.h>
 #include<stdlib.h>
 #include<time.h>
