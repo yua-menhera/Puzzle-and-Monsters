@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"name": "Puzzle-and-Monsters",
+			"path": ".."
+		}
+	],
+	"settings": {
+		"jira-plugin.workingProject": "",
+		"files.encoding": "shiftjis"
+	}
+}

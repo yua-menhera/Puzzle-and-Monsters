@@ -23,10 +23,10 @@ void printGems(BattleField* field)
 }
 
 void moveGem(BattleField* field, char src, char dest,int mode)
-{	
+{
 	src -= 'A';
 	dest -= 'A';
-	
+
 	// srcを操作してdestに近づけるイメージ？
 	int* ptrElement = field->element;
 	int iMove = abs(dest - src);
@@ -66,13 +66,17 @@ void swapGem(BattleField* field, int src, int move,int mode)
 
 void evaluteGems(BattleField* field,BanishInfo* banishInfo)
 {
-	*banishInfo = checkBanishable(field);
-	if (banishInfo->iElement != -1) {
-		banishGems(field, *banishInfo);
-		printGems(field);
-		shiftGems(field, *banishInfo);
-		spawnGems(field);
-	}
+	int combo = 0;
+	do{
+		*banishInfo = checkBanishable(field);
+		if (banishInfo->iElement != -1) {
+			combo++;
+			banishGems(field, *banishInfo, combo);
+			printGems(field);
+			shiftGems(field, *banishInfo);
+			spawnGems(field);
+		}
+	} while (banishInfo->iElement!= -1);
 }
 
 BanishInfo checkBanishable(BattleField* field)
@@ -109,15 +113,15 @@ BanishInfo checkBanishable(BattleField* field)
 	return banish;
 }
 
-void banishGems(BattleField* field, BanishInfo banish)
+void banishGems(BattleField* field, BanishInfo banish,int combo)
 {
 	for (int i = 0; i < banish.iNumber; i++) {
 		field->element[banish.iStart + i] = empty;
 	}
 	if (banish.iElement == life) {
-		doRecover(&field->party, banish.iNumber,1);
+		doRecover(&field->party, banish.iNumber,combo);
 	} else {
-		doAttack(&field->party, &field->enemyMonster, banish.iElement,banish.iNumber,1);
+		doAttack(&field->party, &field->enemyMonster, banish.iElement,banish.iNumber,combo);
 	}
 }
 

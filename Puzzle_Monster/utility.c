@@ -23,7 +23,7 @@ void showBattleField(BattleField* field)
 	printf("\n");
 	printf("   HP= %d / %d\n", field->enemyMonster.iHitpoint, field->enemyMonster.iMaxHitpoint);
 	printf("\n");
-	
+
 	for (int i = 0; i < field->party.iMonsterNum; i++) {
 		printMonsterName(field->party.pMonster[i]);
 		printf(" ");
@@ -57,10 +57,17 @@ int blurDamage(int damage, int min_damage, int max_damage)
 	return damage + randDamage;
 }
 
-int calcEnemyAttackDamage(int enemyAttack, int partyDefence)
+int calcEnemyAttackDamage(int enemyAttack, int partyDefence, int isCritical)
 {
-	int recvDamage = enemyAttack - partyDefence;
-	return blurDamage(recvDamage, recvDamage*0.9, recvDamage*1.1);
+	int recvDamage = (enemyAttack / 2) - (partyDefence / 4);
+	recvDamage = blurDamage(recvDamage, recvDamage*0.9, recvDamage*1.1);
+	if(recvDamage < 0) {
+		recvDamage = 1;
+    }
+	if (isCritical) {
+        recvDamage = recvDamage * 2;
+    }
+	return recvDamage;
 }
 
 int calcAttackDamage(int playerAttack, int enemyDefence, double boost, int gems, int combo)

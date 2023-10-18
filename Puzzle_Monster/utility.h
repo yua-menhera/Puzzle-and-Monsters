@@ -51,9 +51,10 @@ int blurDamage(int damage, int min_damage, int max_damage);
  * @brief 敵モンスターから受けるダメージを出力する関数
  * @param enemyAttack 敵の攻撃力
  * @param partyDefence パーティーの防御力
+ * @param isCritical 急所攻撃か
  * @return int 受けるダメージ量を出力
  */
-int calcEnemyAttackDamage(int enemyAttack, int partyDefence);
+int calcEnemyAttackDamage(int enemyAttack, int partyDefence,int isCritical);
 
 /**
  * @brief 敵モンスターに与えるダメージを出力する関数

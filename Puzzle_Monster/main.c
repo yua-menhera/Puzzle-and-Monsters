@@ -1,4 +1,6 @@
 #include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
 #include<Windows.h>
 #include"define.h"
 #include"dungeon.h"
@@ -7,7 +9,16 @@
 const int MAX_GEMS = 14;
 int main(int argc, char** argv)
 {
-	SetConsoleTitle(L"Puzzle & Monsters");
+	HANDLE stdOut = GetStdHandle(STD_OUTPUT_HANDLE);
+	DWORD consoleMode = 0;
+	GetConsoleMode(stdOut, &consoleMode);
+	consoleMode |= 0x0004;
+	SetConsoleMode(stdOut, consoleMode);
+
+	unsigned int seed = (unsigned int)time(NULL);
+	srand(seed);
+
+	SetConsoleTitle("Puzzle & Monsters");
 	if (argc != 2) {
 		printf("エラー:プレイヤー名を指定して起動してください");
 		return 1;
