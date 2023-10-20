@@ -75,6 +75,7 @@ void evaluteGems(BattleField* field,BanishInfo* banishInfo)
 			printGems(field);
 			shiftGems(field, *banishInfo);
 			spawnGems(field);
+			printGems(field);
 		}
 	} while (banishInfo->iElement!= -1);
 }
