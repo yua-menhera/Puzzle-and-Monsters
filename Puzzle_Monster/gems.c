@@ -4,6 +4,7 @@
 #include<math.h>
 #include"define.h"
 #include"utility.h"
+#include"battle.h"
 #include"gems.h"
 
 void fillGems(BattleField* field)
