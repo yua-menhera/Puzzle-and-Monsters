@@ -85,6 +85,7 @@ void onEnemyTurn(BattleField* field)
 void doEnemyAttack(Party* party, Monster* monster)
 {
 	int receiveDamage;
+	srand((unsigned)time(NULL));
 	if(rand() % 24 == 0){
 		printf("‹}Š‚É“–‚½‚Á‚½I\n");
 		receiveDamage = calcEnemyAttackDamage(monster->iAttack, party->iAllDefence,1);
