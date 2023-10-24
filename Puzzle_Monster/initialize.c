@@ -2,9 +2,10 @@
 #include<stdlib.h>
 #include<time.h>
 #include"define.h"
+#include"skill.h"
 #include"utility.h"
 
-void initialize(Monster* enemymonster,Monster* playermonster, Dungeon* dungeon)
+void initialize(Monster* enemymonster,Monster* playermonster,Skill* skill, Dungeon* dungeon)
 {
 	enemymonster[slime].strName = "スライム";
 	enemymonster[slime].iHitpoint = 100;
@@ -72,6 +73,25 @@ void initialize(Monster* enemymonster,Monster* playermonster, Dungeon* dungeon)
 	dungeon->pMonster = enemymonster;
 	dungeon->iMonsterNum = 5;
 
+	skill[SKILL_ALL_FIRE].strName = "全体攻撃(火)";
+	skill[SKILL_ALL_FIRE].strDetail = "宝石を全て火属性に置き換える";
+	skill[SKILL_ALL_FIRE].iUsingSkillPoint = 10;
+	skill[SKILL_ALL_WATER].strName = "全体攻撃(水)";
+	skill[SKILL_ALL_WATER].strDetail = "宝石を全て水属性に置き換える";
+	skill[SKILL_ALL_WATER].iUsingSkillPoint = 10;
+	skill[SKILL_ALL_WIND].strName = "全体攻撃(風)";
+	skill[SKILL_ALL_WIND].strDetail = "宝石を全て風属性に置き換える";
+	skill[SKILL_ALL_WIND].iUsingSkillPoint = 10;
+	skill[SKILL_ALL_EARTH].strName = "全体攻撃(地)";
+	skill[SKILL_ALL_EARTH].strDetail = "宝石を全て地属性に置き換える";
+	skill[SKILL_ALL_EARTH].iUsingSkillPoint = 10;
+	skill[SKILL_SUPER_GEM].strName = "圧倒的コンボ生成";
+	skill[SKILL_SUPER_GEM].strDetail = "宝石を3連鎖で生成する";
+	skill[SKILL_SUPER_GEM].iUsingSkillPoint = 20;
+
+	skill[SKILL_MAX].strName = "なし";
+	skill[SKILL_MAX].strDetail = "";
+	skill[SKILL_MAX].iUsingSkillPoint = 0;
 }
 BattleField initField(Party party, Monster monster)
 {

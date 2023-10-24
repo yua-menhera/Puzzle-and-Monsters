@@ -1,7 +1,6 @@
 /**
  * @file utility.h
- * @brief ユーティリティ関数ヘッダー
- * @date 2022/05/18
+ * @brief ユーティリティ関数ヘッダ
  */
 #pragma once
 
@@ -32,11 +31,11 @@ void printGems(BattleField* field);
 
 /**
  * @brief 入力されたコマンドが有効かどうかを判定する関数
- * @param src 対象の宝石
- * @param dest 移動先
+ * @param src コマンド
+ * @param command コマンドの種類を格納する変数
  * @return int 有効であれば0, 無効であれば1を出力
  */
-int checkValidCommand(char src, char dest);
+int checkValidCommand(char* src, int* command);
 
 /**
  * @brief ダメージ・回復量を指定された範囲内で変更する
@@ -63,10 +62,26 @@ int calcEnemyAttackDamage(int enemyAttack, int partyDefence,int isCritical);
  * @param boost 倍率
  * @param gems 属性
  * @param combo コンボ数
+ * @param isCritical 急所攻撃か
  * @return int 与えるダメージ量を出力
  */
-int calcAttackDamage(int playerAttack, int enemyDefence, double boost, int gems, int combo);
+int calcAttackDamage(int playerAttack, int enemyDefence, double boost, int gems, int combo, int isCritical);
+
+/**
+ * @brief 回復量を計算する関数
+ *
+ * @return int 回復量を出力
+ */
 int calcRecoverDamage();
+
+/**
+ * @brief コンボ数を表示する関数
+ *
+ */
 void printCombo();
 
-/* @} */
+/**
+ * @brief スキル情報を表示する関数
+ *
+ */
+void printSkill(Party party);

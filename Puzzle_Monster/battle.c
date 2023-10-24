@@ -2,6 +2,7 @@
 #include<stdlib.h>
 #include<stdbool.h>
 #include<math.h>
+#include<time.h>
 #include"define.h"
 #include"battle.h"
 #include"utility.h"
@@ -32,29 +33,39 @@ void onPlayerTurn(BattleField* field,int* nowHitPoint)
 	printf("【%sのターン】\n", field->party.strPlayerName);
 	showBattleField(field);
 	int keys = 0;
+	int command = 0;
+	printf("スキル表示コマンド:SKILL\n");
 	printf("コマンド?>");
 	do {
-		keys = scanf_s("%s", strInputKeyboard, 1024);
-		if (checkValidCommand(strInputKeyboard[0], strInputKeyboard[1])) {
+		keys = scanf_s("%d", strInputKeyboard, 1024);
+		if (checkValidCommand(strInputKeyboard, &command)) {
 			keys = 0;
 		}
 	} while (!keys);
-	moveGem(field, strInputKeyboard[0], strInputKeyboard[1],1);
+	if(command == 1){
+		moveGem(field, strInputKeyboard[0], strInputKeyboard[1],1);
+		evaluteGems(field, &turnBanishInfo);
+		*nowHitPoint = field->party.iAllHitpoint;
+	}else if(command == 2){
 
-	evaluteGems(field, &turnBanishInfo);
-	*nowHitPoint = field->party.iAllHitpoint;
+	}
 	free(strInputKeyboard);
+	field->party.iSkillPoint += 1;
 }
 void doAttack(Party* party, Monster* enemyMonster,Element selectElement, int deletedGems, int combo)
 {
-	// int iAttackDamage = (party->pMonster[PARTY_MONSTER_ELEMENT[selectElement]].iAttack - enemyMonster->iDefence)*ELEMENT_BOOST[selectElement][enemyMonster->iElement]*pow((double)(deletedGems-3+combo),1.5);
-	int iAttackDamage = ((party->pMonster[PARTY_MONSTER_ELEMENT[selectElement]].iAttack *
-					pow((double)(deletedGems - 3 + combo),1.5)/2) - (enemyMonster->iDefence / 4));
-	iAttackDamage = iAttackDamage * ELEMENT_BOOST[selectElement][enemyMonster->iElement];
-	iAttackDamage = blurDamage(iAttackDamage, iAttackDamage * 0.9, iAttackDamage * 1.1);
-	if (iAttackDamage <= 0) {
-		iAttackDamage = 1;
+	srand((unsigned)time(NULL));
+	int isCritical = 0;
+	if(rand() % 24 == 0){
+		printf("急所に当たった！\n");
+		isCritical = 1;
 	}
+	int iAttackDamage = calcAttackDamage(party->pMonster[PARTY_MONSTER_ELEMENT[selectElement]].iAttack,
+					 				 enemyMonster->iDefence,
+									 ELEMENT_BOOST[selectElement][enemyMonster->iElement],
+									 selectElement,
+									 combo,
+									 isCritical);
 	enemyMonster->iHitpoint -= iAttackDamage;
 	if(combo>1){
 		printf("\x1b[0m%dコンボ！\n",combo);

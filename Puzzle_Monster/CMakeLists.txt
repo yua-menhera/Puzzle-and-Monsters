@@ -10,6 +10,7 @@ add_executable(Puzzle_Monster
 				initialize.c
 				main.c
 				party.c
-				utility.c)
+				utility.c
+				skill.c)
 
 target_include_directories(Puzzle_Monster PRIVATE include)

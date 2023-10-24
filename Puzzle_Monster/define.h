@@ -48,6 +48,16 @@ typedef enum PlayerMonsterID {
 	genbu	/**< Œº• = 3 */
 }PlayerMonsterID;
 
+typedef enum SkillID{
+	SKILL_MIN,
+	SKILL_ALL_FIRE,
+	SKILL_ALL_WATER,
+	SKILL_ALL_WIND,
+	SKILL_ALL_EARTH,
+	SKILL_SUPER_GEM,
+	SKILL_MAX
+}SkillID;
+
 /**
  * @struct monster
  * @brief \‘¢‘Ì‚Ìà–¾
@@ -65,21 +75,29 @@ typedef struct dungeon {
 	Monster *pMonster;
 	int iMonsterNum;
 }Dungeon;
-
+typedef struct skill {
+	char* strName;
+	char* strDetail;
+	int iUsingSkillPoint;
+}Skill;
 typedef struct party {
 	Monster* pMonster;
+	Skill* pSkill;
 	int iMonsterNum;
 	char* strPlayerName;
 	int iAllMaxHitpoint;
 	int iAllHitpoint;
 	int iAllDefence;
+	int iSkillPoint;
 }Party;
 
 typedef struct BattleField {
 	Party party;
 	Monster enemyMonster;
 	Element element[14];
+	Element elementQueue[14];
 }BattleField;
+
 typedef struct banishInfo {
 	Element iElement;
 	int iStart;

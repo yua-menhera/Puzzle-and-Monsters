@@ -24,20 +24,24 @@ int main(int argc, char** argv)
 		return 1;
 	}
 	printf("*** Puzzle & Monsters ***\n");
-
+	printf("\n---操作方法---\n");
+	printf("A~N A~N:1番目に選択した宝石を2番目の場所に移動する\n");
+	printf("SKILL:スキルを発動する\n\n");
 	Monster *EnemyMonsters;
 	Monster *PlayerMonsters;
+	Skill *skills;
 	Dungeon dungeon;
 	Party party;
 	EnemyMonsters = (Monster*)calloc(100, sizeof(Monster));
 	PlayerMonsters = (Monster*)calloc(100, sizeof(Monster));
+	skills = (Skill*)calloc(100, sizeof(Skill));
 
 	if (EnemyMonsters == NULL || PlayerMonsters == NULL) {
 		printf("メモリ確保エラー");
 		return 1;
 	}
 
-	initialize(EnemyMonsters, PlayerMonsters, &dungeon);
+	initialize(EnemyMonsters, PlayerMonsters, skills, &dungeon);
 	party = organizeParty(argv[1], PlayerMonsters, 4);
 
 	int defeatMonster = goDungeon(party, dungeon);

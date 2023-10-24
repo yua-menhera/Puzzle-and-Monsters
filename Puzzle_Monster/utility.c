@@ -7,6 +7,8 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<time.h>
+#include<math.h>
+#include<string.h>
 #include"define.h"
 #include"utility.h"
 
@@ -30,15 +32,20 @@ void showBattleField(BattleField* field)
 	}
 	printf("\n");
 	printf("   HP= %d / %d\n", field->party.iAllHitpoint, field->party.iAllMaxHitpoint);
+	printf("   SP= %d\n", field->party.iSkillPoint);
 	printf("-----------------------------\n");
 	printf(" A B C D E F G H I J K L M N \n");
 	printGems(field);
 	printf("-----------------------------\n");
 
 }
-int checkValidCommand(char src, char dest)
+int checkValidCommand(char* src, int* command)
 {
-	if ('A' <= src && src <= 'N' && 'A' <= dest && dest <= 'N') {
+	if (('A' <= src[0] && src[0] <= 'N') && ('A' <= src[1] && src[1] <= 'N') && (src[2] == '\0')) {
+		*command = 1;
+		return 0;
+	} else if(strcmp(src,"SKILL") == 0){
+		*command = 2;
 		return 0;
 	} else {
 		return 1;
@@ -70,8 +77,28 @@ int calcEnemyAttackDamage(int enemyAttack, int partyDefence, int isCritical)
 	return recvDamage;
 }
 
-int calcAttackDamage(int playerAttack, int enemyDefence, double boost, int gems, int combo)
+int calcAttackDamage(int playerAttack, int enemyDefence, double boost, int gems, int combo, int isCritical)
 {
 	int attackDamage = (playerAttack - enemyDefence) * boost * pow(gems - 3 + combo, 1.5);
+	int adjustPlayerAttack = playerAttack * pow(gems - 3 + combo, 1.5) / 2;
+	int adjustEnemyDefence = enemyDefence / 4;
+	attackDamage = adjustPlayerAttack - adjustEnemyDefence;
+	if(attackDamage < 0) {
+		attackDamage = 1;
+	}
+	attackDamage = attackDamage * boost;
+	if(isCritical){
+		attackDamage = attackDamage * 2;
+	}
 	return blurDamage(attackDamage, attackDamage * 0.9, attackDamage * 1.1);
+}
+
+void printSkill(Party party) {
+	printf("*** ƒXƒLƒ‹ˆê—— ***\n");
+	for(int i = 1;i < SKILL_MAX; i++){
+		printf("%d:%s\n",i,party.pSkill[i].strName);
+		printf("Á”ïSP:%d\n",party.pSkill[i].iUsingSkillPoint);
+		printf("Œø‰Ê:%s\n",party.pSkill[i].strDetail);
+		printf("\n");
+	}
 }

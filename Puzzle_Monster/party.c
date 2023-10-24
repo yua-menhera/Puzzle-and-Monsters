@@ -3,12 +3,13 @@
 #include"party.h"
 #include"utility.h"
 
-Party organizeParty(char* strName, Monster* pPlayerMonster , int iMonsterNumbers)
+Party organizeParty(char* strName, Monster* pPlayerMonster , int iMonsterNumbers,Skill* pSkill)
 {
 	Party party;
 	party.iAllMaxHitpoint = 0;
 	party.iAllHitpoint = 0;
 	party.iAllDefence = 0;
+	party.iSkillPoint = 0;
 	party.strPlayerName = strName;
 	party.iMonsterNum = iMonsterNumbers;
 	party.pMonster = pPlayerMonster;
@@ -17,6 +18,7 @@ Party organizeParty(char* strName, Monster* pPlayerMonster , int iMonsterNumbers
 		party.iAllHitpoint += pPlayerMonster[i].iHitpoint;
 		party.iAllDefence += pPlayerMonster[i].iDefence;
 	}
+	party.pSkill = pSkill;
 	return party;
 }
 void showParty(Party party)
